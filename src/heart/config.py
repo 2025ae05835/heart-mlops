@@ -50,3 +50,4 @@ THAL_LABELS = {3: "normal", 6: "fixed_defect", 7: "reversible_defect"}
 RANDOM_STATE = 42
 CV_FOLDS = 5
 TEST_SIZE = 0.2
+x=1  ;y = 2
