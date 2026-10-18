@@ -76,7 +76,7 @@ def candidates(quick: bool = False):
         "logistic_regression": (
             LogisticRegression(max_iter=5000, solver="liblinear"),
             {"model__C": [0.01, 0.03, 0.1, 0.3, 1.0, 3.0],
-             "model__penalty": ["l1", "l2"],
+             "model__l1_ratio": [0.0, 1.0],  # 0 = L2, 1 = L1
              "model__class_weight": [None, "balanced"]}),
         "random_forest": (
             RandomForestClassifier(random_state=rs, n_jobs=-1),
