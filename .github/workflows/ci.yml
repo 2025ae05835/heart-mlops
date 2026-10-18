@@ -1,0 +1,122 @@
+name: ci-cd
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: "3.12"
+  IMAGE_NAME: heart-api
+  PYTHONPATH: src:.
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - run: pip install flake8==7.4.1
+      - name: flake8
+        run: flake8 src api test --format='::error file=%(path)s,line=%(row)d,col=%(col)d::%(code)s %(text)s'
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Unit tests
+        run: pytest -v --junitxml=test-results.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: test-results.xml
+
+  train:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Download & clean data
+        run: python -m heart.data --force
+      - name: EDA
+        run: python -m heart.eda
+      - name: Train + tune (MLflow tracked)
+        run: python -m heart.train 2>&1 | tee training.log
+      - name: Quality gate (CV ROC-AUC >= 0.85)
+        run: |
+          python - <<'EOF'
+          import json, sys
+          m = json.load(open("models/model_metadata.json"))
+          auc = m["metrics"]["cv_roc_auc_mean"]
+          print(f"Selected {m['model_name']} with CV ROC-AUC {auc:.3f}")
+          sys.exit(0 if auc >= 0.85 else 1)
+          EOF
+      - uses: actions/upload-artifact@v4
+        with:
+          name: model-and-reports
+          path: |
+            models/
+            reports/
+            data/processed/heart_clean.csv
+            training.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mlflow-tracking
+          path: |
+            mlflow.db
+            mlruns/
+
+  docker:
+    needs: train
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: model-and-reports
+      - name: Build image
+        run: docker build -t $IMAGE_NAME:${{ github.sha }} .
+      - name: Smoke test container
+        run: |
+          docker run -d --name api -p 8000:8000 $IMAGE_NAME:${{ github.sha }}
+          for i in $(seq 1 30); do curl -sf localhost:8000/health && break; sleep 1; done
+          curl -sf -X POST localhost:8000/predict \
+            -H "Content-Type: application/json" -d @sample/patient.json | tee prediction.json
+          grep -q '"confidence"' prediction.json
+          curl -sf localhost:8000/metrics | grep heart_api_predictions_total
+          docker logs api > container.log 2>&1
+      - name: Push to GHCR (main branch only)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          IMG=ghcr.io/$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')/$IMAGE_NAME
+          docker tag $IMAGE_NAME:${{ github.sha }} $IMG:${{ github.sha }}
+          docker tag $IMAGE_NAME:${{ github.sha }} $IMG:latest
+          docker push $IMG:${{ github.sha }}
+          docker push $IMG:latest
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: container-smoke-test
+          path: |
+            prediction.json
+            container.log

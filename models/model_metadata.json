@@ -1,0 +1,46 @@
+{
+  "model_name": "random_forest",
+  "mlflow_run_id": "2055e2c2e9144566bf95a1728df42efb",
+  "best_params": {
+    "model__max_depth": null,
+    "model__max_features": "sqrt",
+    "model__min_samples_leaf": 5,
+    "model__n_estimators": 200
+  },
+  "metrics": {
+    "cv_accuracy_mean": 0.8423,
+    "cv_precision_mean": 0.837,
+    "cv_recall_mean": 0.8273,
+    "cv_f1_mean": 0.8269,
+    "cv_roc_auc_mean": 0.917,
+    "cv_accuracy_std": 0.021,
+    "cv_precision_std": 0.0681,
+    "cv_recall_std": 0.0727,
+    "cv_f1_std": 0.0228,
+    "cv_roc_auc_std": 0.0286,
+    "test_accuracy": 0.7869,
+    "test_precision": 0.8,
+    "test_recall": 0.7143,
+    "test_f1": 0.7547,
+    "test_roc_auc": 0.8885
+  },
+  "features": [
+    "age",
+    "trestbps",
+    "chol",
+    "thalach",
+    "oldpeak",
+    "ca",
+    "sex",
+    "fbs",
+    "exang",
+    "cp",
+    "restecg",
+    "slope",
+    "thal"
+  ],
+  "trained_rows": 302,
+  "trained_at": "2026-10-18T18:47:40Z",
+  "sklearn_version": "1.9.1",
+  "python_version": "3.13.16"
+}

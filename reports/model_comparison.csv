@@ -1,0 +1,4 @@
+name,run_id,cv_accuracy_mean,cv_precision_mean,cv_recall_mean,cv_f1_mean,cv_roc_auc_mean,cv_accuracy_std,cv_precision_std,cv_recall_std,cv_f1_std,cv_roc_auc_std,test_accuracy,test_precision,test_recall,test_f1,test_roc_auc
+logistic_regression,c8d39ffd529b4ab796641fc34bffd756,0.8299,0.8168,0.8182,0.8141,0.9088,0.0238,0.053,0.0643,0.0271,0.0362,0.8525,0.8519,0.8214,0.8364,0.921
+random_forest,2055e2c2e9144566bf95a1728df42efb,0.8423,0.837,0.8273,0.8269,0.917,0.021,0.0681,0.0727,0.0228,0.0286,0.7869,0.8,0.7143,0.7547,0.8885
+hist_gradient_boosting,df9b2843ff714937a97e9246eef16c3c,0.8215,0.817,0.8,0.8023,0.8945,0.0172,0.0638,0.0843,0.0247,0.0324,0.8197,0.8696,0.7143,0.7843,0.8961

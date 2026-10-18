@@ -1,0 +1,137 @@
+{
+  "rows": 302,
+  "missing": {
+    "ca": 4,
+    "thal": 2
+  },
+  "class_balance": {
+    "0": 164,
+    "1": 138
+  },
+  "top_correlations_with_target": {
+    "thal_normal": -0.526,
+    "thalach": -0.42,
+    "slope_upsloping": -0.392,
+    "cp_non_anginal": -0.314,
+    "cp_atypical_angina": -0.248,
+    "restecg_normal": -0.173,
+    "cp_typical_angina": -0.088,
+    "fbs": 0.027,
+    "slope_downsloping": 0.063,
+    "restecg_st_t_abnormality": 0.068,
+    "chol": 0.081,
+    "thal_fixed_defect": 0.106,
+    "trestbps": 0.146,
+    "restecg_lv_hypertrophy": 0.157,
+    "age": 0.221,
+    "sex": 0.284,
+    "slope_flat": 0.36,
+    "oldpeak": 0.429,
+    "exang": 0.436,
+    "ca": 0.464,
+    "thal_reversible_defect": 0.485,
+    "cp_asymptomatic": 0.515
+  },
+  "describe": {
+    "age": {
+      "count": 302.0,
+      "mean": 54.42,
+      "std": 9.05,
+      "min": 29.0,
+      "25%": 48.0,
+      "50%": 55.5,
+      "75%": 61.0,
+      "max": 77.0
+    },
+    "trestbps": {
+      "count": 302.0,
+      "mean": 131.6,
+      "std": 17.56,
+      "min": 94.0,
+      "25%": 120.0,
+      "50%": 130.0,
+      "75%": 140.0,
+      "max": 200.0
+    },
+    "chol": {
+      "count": 302.0,
+      "mean": 246.5,
+      "std": 51.75,
+      "min": 126.0,
+      "25%": 211.0,
+      "50%": 240.5,
+      "75%": 274.75,
+      "max": 564.0
+    },
+    "thalach": {
+      "count": 302.0,
+      "mean": 149.57,
+      "std": 22.9,
+      "min": 71.0,
+      "25%": 133.25,
+      "50%": 152.5,
+      "75%": 166.0,
+      "max": 202.0
+    },
+    "oldpeak": {
+      "count": 302.0,
+      "mean": 1.04,
+      "std": 1.16,
+      "min": 0.0,
+      "25%": 0.0,
+      "50%": 0.8,
+      "75%": 1.6,
+      "max": 6.2
+    },
+    "ca": {
+      "count": 298.0,
+      "mean": 0.67,
+      "std": 0.94,
+      "min": 0.0,
+      "25%": 0.0,
+      "50%": 0.0,
+      "75%": 1.0,
+      "max": 3.0
+    },
+    "sex": {
+      "count": 302.0,
+      "mean": 0.68,
+      "std": 0.47,
+      "min": 0.0,
+      "25%": 0.0,
+      "50%": 1.0,
+      "75%": 1.0,
+      "max": 1.0
+    },
+    "fbs": {
+      "count": 302.0,
+      "mean": 0.15,
+      "std": 0.36,
+      "min": 0.0,
+      "25%": 0.0,
+      "50%": 0.0,
+      "75%": 0.0,
+      "max": 1.0
+    },
+    "exang": {
+      "count": 302.0,
+      "mean": 0.33,
+      "std": 0.47,
+      "min": 0.0,
+      "25%": 0.0,
+      "50%": 0.0,
+      "75%": 1.0,
+      "max": 1.0
+    },
+    "target": {
+      "count": 302.0,
+      "mean": 0.46,
+      "std": 0.5,
+      "min": 0.0,
+      "25%": 0.0,
+      "50%": 0.0,
+      "75%": 1.0,
+      "max": 1.0
+    }
+  }
+}

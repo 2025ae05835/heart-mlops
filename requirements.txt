@@ -1,0 +1,9 @@
+# Full development / training environment (Python 3.11+)
+-r requirements-serve.txt
+matplotlib==3.11.2
+seaborn==0.13.2
+mlflow==3.17.1
+skops==0.16.0
+httpx==0.28.1
+pytest==9.1.1
+flake8==7.4.1

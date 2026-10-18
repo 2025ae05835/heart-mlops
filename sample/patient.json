@@ -1,0 +1,3 @@
+{"age": 58, "sex": 1, "cp": "asymptomatic", "trestbps": 140, "chol": 260,
+ "fbs": 0, "restecg": "lv_hypertrophy", "thalach": 120, "exang": 1,
+ "oldpeak": 2.4, "slope": "flat", "ca": 2, "thal": "reversible_defect"}
